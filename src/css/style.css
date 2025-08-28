@@ -1,0 +1,313 @@
+
+[v-cloak] {
+    display: none;
+}
+
+#wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+#content-wrapper {
+    flex: 1;
+    min-width: 0;
+}
+
+#zoom-embeddable-phone-iframe-right-side {
+    flex-shrink: 0;
+    height: 100vh;
+}
+
+.iframe-collapsed #zoom-embeddable-phone-iframe-right-side {
+    width: 0px !important; /* Collapse the iframe */
+    flex-shrink: 0; /* Prevent it from taking space */
+    overflow: hidden; /* Hide content when collapsed */
+    border: none; /* Hide border if any */
+    padding: 0; /* Hide padding if any */
+    margin: 0; /* Hide margin if any */
+}
+
+#iframe-resize-handle {
+    width: 10px; /* Width of the draggable area */
+    cursor: col-resize; /* Indicates it's resizable */
+    background-color: transparent; /* Default to transparent */
+    border: none; /* Ensure no border */
+    padding: 0; /* Ensure no padding */
+    position: relative;
+    display: flex; /* To help center the icon */
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    height: 100vh; /* Match iframe height */
+    z-index: 10; /* Ensure it's clickable */
+    transition: background-color 0.2s ease-in-out; /* Smooth transition for hover */
+}
+
+/* Only apply hover effect if the wrapper is NOT collapsed */
+#wrapper:not(.iframe-collapsed) #iframe-resize-handle:hover {
+    background-color: #cccccc;
+}
+
+/* Styles for collapsed state */
+#wrapper.iframe-collapsed #iframe-resize-handle { /* Increased specificity */
+    width: 40px !important; /* Width of the bar when collapsed */
+    /*background-color: #007bff !important; !* Blue background *!*/
+    cursor: pointer !important; /* Indicate clickable to expand */
+    /* Ensure other properties don't interfere */
+    min-width: 40px !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: flex !important; /* Keep it as a flex container for the icon */
+    align-items: center;
+    justify-content: center;
+    transition: none !important;
+    z-index: 1000; /* Ensure it's on top */
+}
+/* Remove hover effect for the handle itself when collapsed */
+#wrapper.iframe-collapsed #iframe-resize-handle:hover { /* Increased specificity */
+    /*background-color: #0056b3 !important; !* Darker blue on hover for feedback *!*/
+}
+
+
+#content-wrapper {
+    transition: margin-right 0.3s ease-in-out; /* Smooth transition for content area */
+}
+/* No specific margin change needed for #content-wrapper if iframe width goes to 0 and it's a flex item */
+
+/* Styles for hover placement */
+#floating-iframe-container {
+    position: fixed;
+    top: 100px; /* Default top position for floating iframe */
+    right: 20px; /* Default right position for floating iframe */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc; /* A subtle border for the container */
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000; /* Ensure it's above other content */
+    display: flex;
+    flex-direction: column;
+    resize: both; /* Allow manual resizing */
+    min-width: 200px;
+    min-height: 200px;
+    transition: opacity 0.3s ease-in-out;
+    background-color: white; /* Ensure solid background to prevent transparency */
+    backdrop-filter: none; /* Prevent any backdrop blur effects */
+    -webkit-backdrop-filter: none; /* Safari support */
+}
+
+#floating-iframe-container.floating-hidden {
+    opacity: 0;
+    pointer-events: none; /* Disable interactions when hidden */
+}
+
+#floating-iframe-header {
+    background-color: #f8f9fa; /* Light background for the header */
+    padding: 5px 10px;
+    cursor: grab; /* Indicate draggable */
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8em;
+    color: #666;
+}
+
+#floating-iframe-header .title {
+    font-weight: bold;
+}
+
+#floating-iframe-header .close-btn {
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #888;
+}
+
+#floating-iframe-header .close-btn:hover {
+    color: #333;
+}
+
+#zoom-embeddable-phone-iframe-hover {
+    flex-grow: 1; /* Allow iframe to take remaining space in column */
+    border: none; /* Remove iframe's own border */
+    width: 100%; /* Take full width of its container */
+    height: 100%; /* Take full height of its container */
+    background-color: white; /* Ensure iframe has solid background */
+}
+
+/* Styles for navbar integrated info box (both modes) */
+#navbar-info-box {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    white-space: nowrap;
+    min-height: 50px;
+}
+
+#navbar-info-box .navbar-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    min-width: 0;
+}
+
+/* Agent State section - fixed width for label + dropdown */
+#navbar-info-box .navbar-info-item:first-child {
+    flex: 0 0 180px;
+    min-width: 180px;
+}
+/* Slightly narrower when engagement count is hidden */
+#navbar-info-box:not(.navbar-wide) .navbar-info-item:first-child {
+    flex: 0 0 150px;
+    min-width: 150px;
+}
+
+/* Combined Engagements section - width for label + counts + toggle */
+#navbar-info-box .navbar-info-item.engagements-item {
+    flex: 0 0 250px;
+    min-width: 250px;
+}
+
+#navbar-info-box .navbar-info-label {
+    font-size: 0.7rem;
+    color: #6c757d;
+    margin-bottom: 3px;
+    font-weight: 500;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: 0.2px;
+}
+
+#navbar-info-box .navbar-info-value {
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    line-height: 1.2;
+    width: 100%;
+}
+
+#navbar-info-box .navbar-toggle-btn {
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#navbar-info-box .navbar-toggle-btn:hover {
+    background-color: #f8f9fa;
+}
+
+#navbar-info-box .navbar-divider {
+    width: 1px;
+    height: 40px;
+    background-color: #dee2e6;
+    align-self: center;
+}
+
+#navbar-info-box .navbar-status-select {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    background-color: white;
+    min-width: 90px;
+    max-width: 130px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#navbar-info-box .navbar-status-select:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+
+
+/* Improve dropdown appearance */
+#navbar-info-box .navbar-status-select option {
+    padding: 4px 8px;
+}
+
+
+
+/* Make the navbar info box wider when engagement actions are present */
+#navbar-info-box.navbar-wide {
+    min-width: 600px;
+}
+
+/* Engagement Drawer Styles */
+.engagement-drawer {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: max-height 0.3s ease;
+    z-index: 1000;
+}
+
+/* Ensure the navbar-info-box has relative positioning for the drawer */
+#navbar-info-box {
+    position: relative;
+}
+
+.engagement-drawer-open {
+    max-height: 400px;
+}
+
+.engagement-drawer-body {
+    padding: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.engagement-drawer .table {
+    font-size: 0.8rem;
+}
+
+.engagement-drawer .table th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6c757d;
+    border-top: none;
+    padding: 8px 12px;
+}
+
+.engagement-drawer .table td {
+    padding: 8px 12px;
+    vertical-align: middle;
+}
+
+.engagement-drawer .badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+}
+
+.engagement-drawer .btn {
+    padding: 2px 6px;
+    font-size: 0.7rem;
+}
+
+.engagement-drawer .form-control {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+}
