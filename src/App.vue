@@ -838,7 +838,7 @@ export default {
     },
 
     sendMessage(type, data) {
-      console.log("Sending Message type=" + type + " with data=" + data);
+      console.log("Sending Message type=" + type + " with data=" + JSON.stringify(data));
 
       this.zccSmartEmbedLogs.push({
         "direction": "Sending Message", "payload": {
