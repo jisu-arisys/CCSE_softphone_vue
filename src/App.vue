@@ -44,6 +44,103 @@
               </div>
             </li>
 
+            <li>
+              <h6> 인입 팝업 - 받기버튼을 iframe 내에서 클래스명으로 찾으면?</h6>
+              <div class="notify-panel-component">
+                <div  class="notify-panel-component__header">
+                  Zoom 컨택 센터
+                  <i class="zm-icon-close"></i>
+                </div>
+                <div class="notify-panel-component__channelinfo">
+                  <div class="notify-panel-component__campaign">
+                    <i class="notify-panel-component__campaign__channel-icon notify-phone-icon"></i>
+                    <span class="blod">
+                     수신 전화
+                    </span>
+                  </div>
+                </div>
+                <div class="notify-panel-component__content">
+                  <div class="notify-panel-component__content__basic">
+                    <div class="notify-panel-basic">
+                      <div class="notify-panel-basic__header">
+                        <div class="notify-panel-basic__header__default__avatar">
+                          <svg width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
+                            <g clip-path="url(#clip0_9_2)">
+                              <path d="M32 0H16C7.163 0 0 7.163 0 16v16c0 8.837 7.163 16 16 16h16c8.837 0 16-7.163 16-16V16c0-8.837-7.163-16-16-16Z" fill="#F1F4F6"></path>
+                              <path d="M24 22.5A5.25 5.25 0 1 0 24 12a5.25 5.25 0 0 0 0 10.5ZM24 25.5c-6.3 0-10.5 2.82-10.5 6.3a4.2 4.2 0 0 0 4.2 4.2h12.6a4.2 4.2 0 0 0 4.2-4.2c0-3.48-4.2-6.3-10.5-6.3Z" fill="#000001"></path></g><defs data-v-9bca9ae8=""><clipPath id="clip0_9_2">
+                            <path fill="#fff" d="M0 0h48v48H0z"></path></clipPath></defs>
+                          </svg>
+                        </div> <!---->
+                      </div>
+                      <div class="notify-panel-basic__info">
+                        <p class="notify-panel-basic__info__first-line">
+                          <span title="010-2734-3718" class="notify-panel-basic__info__line"> 010-2734-3718 </span>
+                          <span class="notify-panel-basic__info__tag"></span>
+                        </p>
+                        <p class="notify-panel-basic__info__second-line">
+                          <span class="notify-panel-basic__info__line"> South Korea </span>
+                          <span class="notify-panel-basic__info__tag"></span>
+                        </p>
+                        <p class="notify-panel-basic__info__ext">
+                        </p>
+                      </div>
+                      <div class="notify-panel-basic__queue">
+                        <p class="text"><span>까지</span></p>
+                      </div>
+                    </div>
+                    <div class="">
+
+                    </div>
+                  </div>
+                  <div class="notify-panel-component__content__operation">
+                    <div   class="notify-panel-action">
+                      <div   class="notify-panel-component__content__variable nw-contact-preview">
+                        <div  id="out-scroller" role="dialog" aria-label="Contact Details" class="out-scroller ContactUIPreview is-mobile" >
+                          <div id="scroller-ZWRB85F0B177BB95F624FB0D39FC31D5393" role="group" class="scroller">
+                            <div class="scroller-list">
+                              <div
+                                  class="scroller-list__title eye-button eye-button-ZWRB85F0B177BB95F624FB0D39FC31D5393 active scroller-list__title-ZWRB85F0B177BB95F624FB0D39FC31D5393"
+                                  role="button" aria-expanded="true" tabindex="0">
+                                사용자 지정 변수 (1)
+                              </div>
+                              <div role="group" aria-label="사용자 지정 변수" class="eye-button eye-button-ZWRB85F0B177BB95F624FB0D39FC31D5393" id="custom-variables" tabindex="0">
+                                <div class="scroller-item eye-button eye-button-ZWRB85F0B177BB95F624FB0D39FC31D5393" tabindex="-1" role="menuitem">
+                                  <div class="scroller-item-label">고객발신자번호</div>
+                                  <div class="scroller-item-control" title="+821027343718">+821027343718</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="loading-ZWRB85F0B177BB95F624FB0D39FC31D5393" class="loading"
+                               style="visibility: hidden;">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="notify-panel-action__buttons">
+                        <div class="notify-panel-action__buttons__content">
+                          <div class="notify-panel-action__buttons__btn notify-panel-action__buttons__reject-btn"><i
+                              class="notify-panel-action__buttons__icon notify-panel-action__buttons__reject-icon voice-reject-icon"></i>
+                          </div>
+                          <p class="notify-panel-action__buttons__font">
+                            거부
+                          </p></div>
+                        <div class="notify-panel-action__buttons__content">
+                          <div class="notify-panel-action__buttons__btn notify-panel-action__buttons__accept-btn">
+                            <button type="button" @click="clickButtonInIframe()">클릭</button>
+                            <i class="notify-panel-action__buttons__icon notify-panel-action__buttons__voice-accept-icon">
+                            </i>
+                          </div>
+                          <p class="notify-panel-action__buttons__font">
+                            수락
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
           </ol>
         </div>
       </div>
@@ -677,8 +774,8 @@ export default {
             this.selectedContact = null;
           }
         },
-        'zcc-contact-search-event': () => this.process_zcc_contact_search_event(event),
-        'zcc-incomingPhone-request': () => this.process_zcc_incomingPhone_request(event),
+        'zcc-contact-search-event': () => this.process_zcc_contact_search_event(event), //앱 내 연락처 확인?
+        'zcc-incomingPhone-request': () => this.process_zcc_incomingPhone_request(event), // 앱에서 임베디드로 받기팝업요청
         'zcc-incomingEmail-request': () => this.process_zcc_incomingEmail_request(event),
         'zcc-call-ringing': () => this.process_zcc_call_ringing(data.data), //벨울림
         'zcc-chat-ringing': () => this.process_zcc_chat_ringing(data.data),
@@ -795,6 +892,30 @@ export default {
       localStorage.setItem('ctiVersion', this.ctiVersion);
       localStorage.setItem('vanitySubdomain', this.vanitySubdomain);
       location.reload();
+    },
+
+    //test
+    clickButtonInIframe() {
+      const iframeName = "zoom-embeddable-phone-iframe-" + this.placement;
+      const iframe = window.frames[iframeName];
+      if (!iframe) return;
+      console.log("Found iframe:", iframe);
+
+      // iframe 로드 확인
+      // const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+      // if (!iframeDoc) return;
+
+      // 클래스명으로 요소 찾기
+      const targetBtn = iframe.querySelector(
+          ".notify-panel-action__buttons__btn.notify-panel-action__buttons__accept-btn"
+      );
+
+      if (targetBtn) {
+        // targetBtn.click(); // 클릭 실행
+        console.log("버튼 클릭 성공");
+      } else {
+        console.log("버튼을 찾을 수 없음");
+      }
     },
 
     sendMessage(type, data) {
@@ -1130,7 +1251,7 @@ export default {
 
     },
 
-    //전화받기
+    //인입번호 앱 내 조회 후 서버에 응답
     process_zcc_contact_search_event(event) {
       let contactObject = {};
 
@@ -1158,7 +1279,8 @@ export default {
       this.sendMessage('zcc-contact-search-response', contactObject);
     },
 
-    //전화벨 울림
+    //전화벨 울리면, 받기 팝업을 띄움.
+    //PostMessage content  {"type":"zcc-incomingPhone-request","data":{"incomingPhoneNumber":"+821027343718","engagementId":"WSgT4SxZT1GD8RgAgkebfg","channel":"voice"}}
     process_zcc_incomingPhone_request(event) {
       if (!event || !event.data || !event.data.data || !event.data.data.incomingPhoneNumber) {
         this.sendMessage('zcc-incomingPhone-response', []);
