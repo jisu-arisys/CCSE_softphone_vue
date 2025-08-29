@@ -39,7 +39,7 @@
             <li>
               <h6> 상담원 상태변경 </h6>
               <div>
-                <button class="btn btn-light m-1" v-for="status in statuses" :key="status.id"
+                <button class="btn btn-light m-1" v-for="status in btnStatuses" :key="status.id"
                         @click="()=>{ setAgentStatus(status.id);}">
                   {{ status.name }}
                 </button>
@@ -191,7 +191,7 @@ import {ref} from 'vue'
 export default {
   data() {
     return {
-      statuses: [
+      btnStatuses: [
         {id: '1', name: "대기"},
         {id: '20', name: "나누기"},
         {id: '21', name: "식사"},
