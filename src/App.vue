@@ -14,30 +14,30 @@
                 <button class="btn btn-primary py-0" type="button" @click.prevent="makeCall();">Call</button>
               </div>
             </form>
-
-            <!-- 상태 변경 버튼 예제 -->
-            <div>
-              <button class="btn btn-light m-1" v-for="status in statuses" :key="status.id"
-                      @click="()=>{ setAgentStatus(status.id);}">
-                {{ status.name }}
-              </button>
-            </div>
-
-            <!-- 상담원 상태표시 -->
-            <div>
-              <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
-            </div>
-
-            <!--  전화받기 -->
-            <div class="notify-panel-action__buttons__content">
-              <div class="notify-panel-action__buttons__btn notify-panel-action__buttons__accept-btn">
-                <i class="notify-panel-action__buttons__icon notify-panel-action__buttons__voice-accept-icon"></i>
-              </div>
-              <p class="notify-panel-action__buttons__font">수락</p>
-            </div>
-
           </div>
         </nav>
+
+        <div class="bg-white shadow mb-4 p-3">
+          <h4 class="m-3">기능 테스트</h4>
+          <ol>
+            <li>
+              <h6> 상담원 상태출력 </h6>
+              <div>
+                <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
+              </div>
+            </li>
+
+            <li>
+              <h6> 상담원 상태변경 </h6>
+              <div>
+                <button class="btn btn-light m-1" v-for="status in statuses" :key="status.id"
+                        @click="()=>{ setAgentStatus(status.id);}">
+                  {{ status.name }}
+                </button>
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
 
@@ -78,15 +78,19 @@ export default {
   data() {
     return {
       statuses: [
-        {id: 23, name: "회의"},
-        {id: 24, name: "상담중"},
-        {id: 25, name: "대기중"}
+        {id: '1', name: "대기"},
+        {id: '20', name: "나누기"},
+        {id: '21', name: "식사"},
+        {id: '22', name: "교육"},
+        {id: '23', name: "회의"},
+        {id: '24', name: "교대조 종료"},
+        {id: '0bv-2zFiRuqe51BoFLRxZw', name: "타 부서 지원"},
       ],
       pageView: "dashboard", //dashboard
       editingContact: null,
       editingIndex: -1,
       selectedContact: null,
-      agentStatus: "Unknown",
+      agentStatus: "Unknown", // 상담원 상태 기본값 : systemStatues, statusMappings 모두 없을 때 출력됨.
       agentStatusCode: "",
       agentSubReason: "",
       contacts: [{
@@ -195,7 +199,13 @@ export default {
       systemStatuses: [ // Centralized system status codes
         {id: '1', name: 'Ready'},
         {id: '3', name: 'Occupied'},
-        {id: '30', name: 'Offline'}
+        {id: '30', name: 'Offline'},
+        {id: '20', name: "나누기"},
+        {id: '21', name: "식사"},
+        {id: '22', name: "교육"},
+        {id: '23', name: "회의"},
+        {id: '24', name: "교대조 종료"},
+        {id: '0bv-2zFiRuqe51BoFLRxZw', name: "타 부서 지원"},
       ],
       customCard: {
         title: 'Case Details',
@@ -219,9 +229,8 @@ export default {
     this.boundStopResize = this.stopResize.bind(this);
     this.boundDoDrag = this.doDrag.bind(this);
     this.boundStopDrag = this.stopDrag.bind(this);
-
-
   },
+
   computed: {
     // Count of today's interactions across all recent calls
     todaysInteractionsCount() {
@@ -280,6 +289,8 @@ export default {
       console.log('Final result:', result);
       return result;
     },
+
+    // 상담원 상태출력 계산함수
     agentStatusDisplay() {
       // Find the current status in system statuses
       let displayStatus = this.systemStatuses.find(s => s.id === this.agentStatusCode);
@@ -294,6 +305,7 @@ export default {
 
       return name;
     },
+
     statusDropdownClass() {
       switch (this.agentStatusCode) {
         case '1': // Ready
@@ -683,7 +695,7 @@ export default {
         'zcc-call-ended': () => this.process_zcc_call_ended(data.data),
         'zcc-end-post-engagement': () => this.process_zcc_end_post_engagement(data.data),
         'zcc-init-config-response': () => this.process_zcc_init_config_response(event),
-        'zcc-agent-status-notification': () => this.process_zcc_agent_status_notification(data.data)
+        'zcc-agent-status-notification': () => this.process_zcc_agent_status_notification(data.data) //상태변경 알림 이벤트
       };
 
       // Execute the handler if it exists
@@ -1526,8 +1538,7 @@ export default {
     },
 
 
-    //일부
-
+    // 상담원 상태변경 알림 이벤트 처리 함수
     process_zcc_agent_status_notification(data) {
       console.log('=== ENTERING process_zcc_agent_status_notification ===');
       console.log('Input data:', data);
