@@ -53,6 +53,14 @@
               </div>
             </li>
 
+            <li>
+              <h6> 전화 끊기 </h6>
+              <div class="notify-panel-action__buttons__content">
+                <button class="btn btn-light m-1" @click="closeEngagementWrapup(zccEngagementCache[0].engagementId);"> 끊기 </button>
+                <button class="btn btn-light m-1" @click="calAccept(zccEngagementCache[0].engagementId);"> 받기 </button>
+              </div>
+            </li>
+
           </ol>
         </div>
       </div>
@@ -119,7 +127,7 @@ export default {
         "account": "Ozmo",
         "location": "San Jose",
         "orders": "5",
-        "phone": "+16503331234"
+        "phone": "+91027343718"
       }, {
         "name": "Ashlee York",
         "id": "ayork",
@@ -127,7 +135,7 @@ export default {
         "account": "Ozmo",
         "location": "Houston",
         "orders": "2",
-        "phone": "+16503338784"
+        "phone": "+91027343718"
       }, {
         "name": "Clara Arellano",
         "id": "carellano",
@@ -837,6 +845,17 @@ export default {
       }
     },
 
+    //test
+    calAccept(id){
+      console.log("calAccept: "+ id);
+      this.sendMessage("zcc-client-btn-action", // 추정 타입
+          {
+            taskSid: id,    // 실제 task ID로 교체
+            status: 1,                  // acceptCall을 트리거할 수 있는 값
+            skipReasonId: null
+          });
+    },
+
     sendMessage(type, data) {
       console.log("Sending Message type=" + type + " with data=" + JSON.stringify(data));
 
@@ -1284,6 +1303,7 @@ export default {
       return this.navigateToContact(matchingContactIndex);
     },
 
+    //하나의 인입번호에 여러 개의 연락처 정보가 포함된 경우 발생, 상담원이 선택할 수 있는 팝업을 띄움
     async process_zcc_screen_pop(data) {
       if (!data || data === "") return;
 
