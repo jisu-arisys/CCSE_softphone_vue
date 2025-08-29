@@ -207,7 +207,9 @@ export default {
       agentStatus: "Unknown", // 상담원 상태 기본값 : systemStatues, statusMappings 모두 없을 때 출력됨.
       agentStatusCode: "",
       agentSubReason: "",
-      contacts: [{
+      contacts: [
+        // 인입시 팝업에 띄울 고객정보 리스트(연락처 목록)
+        {
         "name": "Maurice Lawson",
         "id": "mlawson",
         "email": "maurice@example.com",
@@ -787,7 +789,7 @@ export default {
             this.selectedContact = null;
           }
         },
-        'zcc-contact-search-event': () => this.process_zcc_contact_search_event(event), //앱 내 연락처 확인?
+        'zcc-contact-search-event': () => this.process_zcc_contact_search_event(event), //앱 내 연락처 검색
         'zcc-incomingPhone-request': () => this.process_zcc_incomingPhone_request(event), // 앱에서 임베디드로 받기팝업요청
         'zcc-incomingEmail-request': () => this.process_zcc_incomingEmail_request(event),
         'zcc-call-ringing': () => this.process_zcc_call_ringing(data.data), //벨울림
@@ -908,7 +910,7 @@ export default {
       location.reload();
     },
 
-    //test
+    //test -cors fail
     clickButtonInIframe() {
       const iframeName = "zoom-embeddable-phone-iframe-" + this.placement;
       const iframe = window.frames[iframeName];
@@ -1293,7 +1295,8 @@ export default {
       this.sendMessage('zcc-contact-search-response', contactObject);
     },
 
-    //전화벨 울리면, 받기 팝업을 띄움.
+    // 전화벨 울리면, 받기 팝업에 연락처 정보를 띄움 : 애플리케이션에 일치하는 레코드가 없는 경우 빈배열 반환.
+    // 배열에 여러 객체를 보내면, 상담원이 항목을 선택할 수 있도록 해당 객체가 표시됨
     //PostMessage content  {"type":"zcc-incomingPhone-request","data":{"incomingPhoneNumber":"+821027343718","engagementId":"WSgT4SxZT1GD8RgAgkebfg","channel":"voice"}}
     process_zcc_incomingPhone_request(event) {
       if (!event || !event.data || !event.data.data || !event.data.data.incomingPhoneNumber) {
