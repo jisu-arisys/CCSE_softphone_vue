@@ -36,6 +36,14 @@
                 </button>
               </div>
             </li>
+
+            <li>
+              <h6> 인입시 토글 </h6>
+              <div class="notify-panel-action__buttons__content">
+                <button class="btn btn-light m-1" @click="process_zcc_call_ringing({ 'from':'010'});"> 전화왔다</button>
+              </div>
+            </li>
+
           </ol>
         </div>
       </div>
@@ -672,7 +680,7 @@ export default {
         'zcc-contact-search-event': () => this.process_zcc_contact_search_event(event),
         'zcc-incomingPhone-request': () => this.process_zcc_incomingPhone_request(event),
         'zcc-incomingEmail-request': () => this.process_zcc_incomingEmail_request(event),
-        'zcc-call-ringing': () => this.process_zcc_call_ringing(data.data),
+        'zcc-call-ringing': () => this.process_zcc_call_ringing(data.data), //벨울림
         'zcc-chat-ringing': () => this.process_zcc_chat_ringing(data.data),
         'zcc-chat-started': () => this.process_zcc_chat_started(data.data),
         'zcc-chat-ended': () => this.process_zcc_chat_ended(data.data),
@@ -1246,6 +1254,7 @@ export default {
       }
     },
 
+    //벨 울림
     process_zcc_call_ringing(data) {
       if (!data || !data.from) return;
 
@@ -1254,6 +1263,12 @@ export default {
         this.isIframeFloatingVisible = true;
         this.saveSettings();
       }
+
+      //feat : 콜인입 오면 닫혀있는(true) 토글 열기 (2025.08.29)
+      if (this.placement === 'right-side' && this.isIframeCollapsed) {
+        this.toggleIframeCollapse();
+      }
+
 
       this.handleScreenPop(data.from, 'phone');
 
