@@ -764,6 +764,10 @@ export default {
       });
     },
 
+    process_zcc_error_log(type, data){
+      console.error('['+ type + ']' + JSON.stringify(data));
+    },
+    //받은 메세지 출력 > 로그저장 > 메세지 타입별 처리함수 호출
     receiveMessage(event) {
       const data = event.data;
 
@@ -808,8 +812,9 @@ export default {
         'zcc-outbound-not-connected': () => this.process_zcc_outbound_outbound_not_connected(data.data),
         'zcc-call-ended': () => this.process_zcc_call_ended(data.data),
         'zcc-end-post-engagement': () => this.process_zcc_end_post_engagement(data.data),
-        'zcc-init-config-response': () => this.process_zcc_init_config_response(event),
-        'zcc-agent-status-notification': () => this.process_zcc_agent_status_notification(data.data) //상태변경 알림 이벤트
+        'zcc-init-config-request': () => this.process_zcc_init_config_response(event),
+        'zcc-agent-status-notification': () => this.process_zcc_agent_status_notification(data.data), //상태변경 알림 이벤트
+        'zcc-error': () => this.process_zcc_error_log(data.type, data.data) //상태변경 알림 이벤트
       };
 
       // Execute the handler if it exists
