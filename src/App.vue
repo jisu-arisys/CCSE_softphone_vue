@@ -1,24 +1,33 @@
 <template>
   <body id="page-top">
   <div id="wrapper" v-cloak :class="{'iframe-collapsed': isIframeCollapsed}">
-    <!--    <span>Iframe Guide Page</span>-->
-
     <div class="d-flex flex-column" id="content-wrapper">
       <div id="content">
-        <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-          <div class="container-fluid flex-nowrap">
-            <form class="d-sm-inline-block w-auto me-auto">
-              <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
-                                              id="phoneNumber" v-model="numberToCall" name="phoneNumber" inputmode="tel"
-                                              placeholder="e.g., (650) 555-7890">
-                <button class="btn btn-primary py-0" type="button" @click.prevent="makeCall();">Call</button>
-              </div>
-            </form>
-          </div>
+        <nav class="navbar navbar-light navbar-expand bg-white shadow mb-3 topbar static-top">
+          <h4 class="m-3">Iframe Guide Page</h4>
+          <span class="text-sm-start">ZOOM Contact Center Smart Embeded - with Vue3 Option Api</span>
         </nav>
 
-        <div class="bg-white shadow mb-4 p-3">
-          <h4 class="m-3">기능 테스트</h4>
+        <div class="bg-white shadow p-3">
+          <h5 class="m-3">기본 기능</h5>
+          <ol>
+            <li>
+              <h6> 전화걸기 </h6>
+              <p class="text-black"> 오디오장치 연결 필수 </p>
+
+              <div class="container-fluid flex-nowrap">
+                <form class="d-sm-inline-block w-auto me-auto">
+                  <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
+                                                  id="phoneNumber" v-model="numberToCall" name="phoneNumber" inputmode="tel"
+                                                  placeholder="e.g., (650) 555-7890">
+                    <button class="btn btn-primary py-0" type="button" @click.prevent="makeCall();">Call</button>
+                  </div>
+                </form>
+              </div>
+            </li>
+          </ol>
+
+          <h5 class="m-3 mt-2">추가 기능</h5>
           <ol>
             <li>
               <h6> 상담원 상태출력 </h6>
