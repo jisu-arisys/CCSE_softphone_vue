@@ -25,6 +25,24 @@
             </div>
           </div>
 
+          <div class="card m-3 p-3 shadow-sm">
+            <div class="card-title"> 전화끊기</div>
+            <div class="card-subtitle text-danger" style="font-size: 12px"></div>
+
+            <div class="card-body">
+              <form class="d-sm-inline-block w-auto me-auto">
+                <div class="input-group">
+                  <select class="bg-light form-control border-0 small" v-model="activeCallId">
+                    <option v-for="(call, index) in Object.keys(zccEngagementCache)" :key="call || index" :value="call">
+                      {{ call }}
+                    </option>
+                  </select>
+                  <button class="btn btn-danger py-0" type="button" @click.prevent="terminateEngagement(activeCallId,'voice');">End</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
           <div class="row m-1">
             <div class="col-6">
               <div class="card p-3 shadow-sm">
@@ -145,6 +163,7 @@ import {ref} from 'vue'
 export default {
   data() {
     return {
+      activeCallId: "",
       ctiMessages: "-",
       softphoneMessage: "-",
       btnStatuses: [
