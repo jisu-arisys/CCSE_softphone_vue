@@ -69,7 +69,38 @@
             <div class="card-title">
               연락처 목록
             </div>
-            <div class="card-subtitle text-gray-900" style="font-size: 12px"> 일치하는 phone 번호의 orders 순위별로 연락처 정보가 출력됨</div>
+            <div class="card-subtitle text-gray-900" style="font-size: 12px"></div>
+
+            <form @submit.prevent="addContact">
+              <div class="row">
+              <div class="col-3 mb-2">
+                <input v-model="newContact.name" placeholder="Name" class="form-control"/>
+              </div>
+              <div class="col-3 mb-2">
+                <input v-model="newContact.id" placeholder="ID" class="form-control"/>
+              </div>
+              <div class="col-3 mb-2">
+                <input v-model="newContact.email" placeholder="Email" class="form-control"/>
+              </div>
+              <div class="col-3 mb-2">
+                <input v-model="newContact.account" placeholder="Account" class="form-control"/>
+              </div>
+              <div class="col-3 mb-2">
+                <input v-model="newContact.location" placeholder="Location" class="form-control"/>
+              </div>
+              <div class="col-3 mb-2">
+                <input v-model="newContact.orders" placeholder="Orders" type="number" class="form-control"/>
+              </div>
+              <div class="col-3 mb-2">
+                <input v-model="newContact.phone" placeholder="Phone" class="form-control"/>
+              </div>
+              <div class="col-3 mb-2">
+                <button type="submit" class="btn btn-primary">추가</button>
+              </div>
+
+              </div>
+            </form>
+
             <div class="card-body">
               <pre>{{ JSON.stringify(contacts, null, 2) }}</pre>
             </div>
@@ -132,6 +163,15 @@ export default {
       agentStatus: "Unknown", // 상담원 상태 기본값 : systemStatues, statusMappings 모두 없을 때 출력됨.
       agentStatusCode: "",
       agentSubReason: "",
+      newContact : {
+        "name": "",
+        "id": "",
+        "email": "",
+        "account": "",
+        "location": "",
+        "orders": "",
+        "phone": ""
+      },
       contacts: [
         // 인입시 팝업에 띄울 고객정보 리스트(연락처 목록)
         {
@@ -838,30 +878,6 @@ export default {
       location.reload();
     },
 
-    //test -cors fail
-    clickButtonInIframe() {
-      const iframeName = "zoom-embeddable-phone-iframe-" + this.placement;
-      const iframe = window.frames[iframeName];
-      if (!iframe) return;
-      console.log("Found iframe:", iframe);
-
-      // iframe 로드 확인
-      // const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-      // if (!iframeDoc) return;
-
-      // 클래스명으로 요소 찾기
-      const targetBtn = iframe.querySelector(
-          ".notify-panel-action__buttons__btn.notify-panel-action__buttons__accept-btn"
-      );
-
-      if (targetBtn) {
-        // targetBtn.click(); // 클릭 실행
-        console.log("버튼 클릭 성공");
-      } else {
-        console.log("버튼을 찾을 수 없음");
-      }
-    },
-
     sendMessage(type, data) {
       console.log("Sending Message type=" + type + " with data=" + JSON.stringify(data));
       this.softphoneMessage = {
@@ -937,6 +953,16 @@ export default {
 
         console.log(`Engagement ${engagement.taskId} updated in cache. New state:`, this.zccEngagementCache[engagement.taskId]);
       }
+    },
+
+    addContact() {
+      if (!this.newContact.name || !this.newContact.phone) {
+        alert("이름과 전화번호는 필수입니다!");
+        return;
+      }
+      this.contacts.push({ ...this.newContact });
+      this.newContact = { name: "", id: "", email: "", account: "", location: "", orders: "", phone: "" }; // 초기화
+      this.saveContact();
     },
 
     // Function to populate contact information for an engagement based on phone number or email
@@ -2617,6 +2643,7 @@ export default {
     }
 
     // Load contacts from localStorage
+    this.saveContact();
     const savedContacts = window.localStorage.getItem("contacts");
     if (savedContacts) {
       this.contacts = JSON.parse(savedContacts);
