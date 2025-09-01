@@ -3,19 +3,18 @@
   <div id="wrapper" v-cloak :class="{'iframe-collapsed': isIframeCollapsed}">
     <div class="d-flex flex-column" id="content-wrapper">
       <div id="content">
-        <nav class="navbar navbar-light navbar-expand bg-white shadow mb-3 topbar static-top">
+        <nav class="navbar navbar-light navbar-expand bg-white shadow topbar static-top">
           <h4 class="m-3">Iframe Guide Page</h4>
           <span class="text-sm-start">ZOOM Contact Center Smart Embeded - with Vue3 Option Api</span>
         </nav>
 
-        <div class="bg-white shadow p-3">
-          <h5 class="m-3">기본 기능</h5>
+        <div>
           <ol>
-            <li>
-              <h6> 전화걸기 </h6>
-              <p class="text-black"> 오디오장치 연결 필수 </p>
+            <li class="card m-3 p-3 shadow-sm">
+              <div class="card-title"> 전화걸기 </div>
+              <div class="card-subtitle text-danger" style="font-size: 12px"> 오디오장치 연결 필수 </div>
 
-              <div class="container-fluid flex-nowrap">
+              <div class="card-body">
                 <form class="d-sm-inline-block w-auto me-auto">
                   <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
                                                   id="phoneNumber" v-model="numberToCall" name="phoneNumber" inputmode="tel"
@@ -25,30 +24,27 @@
                 </form>
               </div>
             </li>
-          </ol>
 
-          <h5 class="m-3 mt-2">추가 기능</h5>
-          <ol>
-            <li>
-              <h6> 상담원 상태출력 </h6>
-              <div>
+            <li class="card m-3 p-3 shadow-sm">
+              <div class="card-title"> 상담원 상태출력 </div>
+              <div class="card-body">
                 <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
               </div>
             </li>
 
-            <li>
-              <h6> 상담원 상태변경 </h6>
-              <div>
+            <li class="card m-3 p-3 shadow-sm">
+              <div class="card-title"> 상담원 상태변경 </div>
+              <div class="card-body">
                 <button class="btn btn-light m-1" v-for="status in btnStatuses" :key="status.id"
-                        @click="()=>{ setAgentStatus(status.id);}">
+                        @click="setAgentStatus(status.id)">
                   {{ status.name }}
                 </button>
               </div>
             </li>
 
-            <li>
-              <h6> 인입시 토글 </h6>
-              <div class="notify-panel-action__buttons__content">
+            <li class="card m-3 p-3 shadow-sm">
+              <div class="card-title"> 인입시 닫힌 토글 열기 </div>
+              <div class="card-body">
                 <button class="btn btn-light m-1" @click="process_zcc_call_ringing({ 'from':'010'});"> 전화왔다</button>
               </div>
             </li>
