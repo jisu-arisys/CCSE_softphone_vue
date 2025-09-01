@@ -32,12 +32,14 @@
             <div class="card-body">
               <form class="d-sm-inline-block w-auto me-auto">
                 <div class="input-group">
-                  <select class="bg-light form-control border-0 small" v-model="activeCallId">
+                  <select class="bg-light form-control border-0 small" v-model="activeCallId" style="min-width: 200px;">
                     <option v-for="(call, index) in Object.keys(zccEngagementCache)" :key="call || index" :value="call">
                       {{ call }}
                     </option>
                   </select>
                   <button class="btn btn-danger py-0" type="button" @click.prevent="terminateEngagement(activeCallId,'voice');">End</button>
+                  <button class="btn btn-warning py-0" type="button" @click.prevent="closeEngagementWrapup(activeCallId,'voice');">상담완료</button>
+
                 </div>
               </form>
             </div>
