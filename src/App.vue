@@ -86,47 +86,6 @@
               <button class="btn btn-light m-1" @click="process_zcc_call_ringing({ 'from':'010'});"> 전화왔다</button>
             </div>
           </div>
-
-          <div class="card m-3 p-3 shadow-sm">
-            <div class="card-title">
-              연락처 목록
-            </div>
-            <div class="card-subtitle text-gray-900" style="font-size: 12px"></div>
-
-            <form @submit.prevent="addContact">
-              <div class="row">
-              <div class="col-3 mb-2">
-                <input v-model="newContact.name" placeholder="Name" class="form-control"/>
-              </div>
-              <div class="col-3 mb-2">
-                <input v-model="newContact.id" placeholder="ID" class="form-control"/>
-              </div>
-              <div class="col-3 mb-2">
-                <input v-model="newContact.email" placeholder="Email" class="form-control"/>
-              </div>
-              <div class="col-3 mb-2">
-                <input v-model="newContact.account" placeholder="Account" class="form-control"/>
-              </div>
-              <div class="col-3 mb-2">
-                <input v-model="newContact.location" placeholder="Location" class="form-control"/>
-              </div>
-              <div class="col-3 mb-2">
-                <input v-model="newContact.orders" placeholder="Orders" type="number" class="form-control"/>
-              </div>
-              <div class="col-3 mb-2">
-                <input v-model="newContact.phone" placeholder="Phone" class="form-control"/>
-              </div>
-              <div class="col-3 mb-2">
-                <button type="submit" class="btn btn-primary">추가</button>
-              </div>
-
-              </div>
-            </form>
-
-            <div class="card-body">
-              <pre>{{ JSON.stringify(contacts, null, 2) }}</pre>
-            </div>
-          </div>
         </div>
       </div>
     </div>
