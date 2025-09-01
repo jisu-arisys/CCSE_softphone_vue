@@ -8,48 +8,72 @@
           <span class="text-sm-start">ZOOM Contact Center Smart Embeded - with Vue3 Option Api</span>
         </nav>
 
-        <div>
-          <ol>
-            <li class="card m-3 p-3 shadow-sm">
-              <div class="card-title"> 전화걸기 </div>
-              <div class="card-subtitle text-danger" style="font-size: 12px"> 오디오장치 연결 필수 </div>
+        <div class="m-3">
+          <div class="card m-3 p-3 shadow-sm">
+            <div class="card-title"> 전화걸기</div>
+            <div class="card-subtitle text-danger" style="font-size: 12px"> 오디오장치 연결 필수</div>
 
-              <div class="card-body">
-                <form class="d-sm-inline-block w-auto me-auto">
-                  <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
-                                                  id="phoneNumber" v-model="numberToCall" name="phoneNumber" inputmode="tel"
-                                                  placeholder="e.g., (650) 555-7890">
-                    <button class="btn btn-primary py-0" type="button" @click.prevent="makeCall();">Call</button>
-                  </div>
-                </form>
+            <div class="card-body">
+              <form class="d-sm-inline-block w-auto me-auto">
+                <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
+                                                id="phoneNumber" v-model="numberToCall" name="phoneNumber"
+                                                inputmode="tel"
+                                                placeholder="e.g., (650) 555-7890">
+                  <button class="btn btn-primary py-0" type="button" @click.prevent="makeCall();">Call</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="row m-1">
+            <div class="col-6">
+              <div class="card p-3 shadow-sm">
+                <div class="card-title"> 받은 메세지</div>
+                <pre class="card-subtitle text-black" style="font-size: 12px"> {{ JSON.stringify(ctiMessages, null, 2) }} </pre>
               </div>
-            </li>
-
-            <li class="card m-3 p-3 shadow-sm">
-              <div class="card-title"> 상담원 상태출력 </div>
-              <div class="card-body">
-                <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
+            </div>
+            <div class="col-6">
+              <div class="card p-3 shadow-sm">
+                <div class="card-title"> 보낸 메세지</div>
+                <pre class="card-subtitle text-black" style="font-size: 12px"> {{ JSON.stringify(softphoneMessage, null, 2) }} </pre>
               </div>
-            </li>
+            </div>
+          </div>
 
-            <li class="card m-3 p-3 shadow-sm">
-              <div class="card-title"> 상담원 상태변경 </div>
-              <div class="card-body">
-                <button class="btn btn-light m-1" v-for="status in btnStatuses" :key="status.id"
-                        @click="setAgentStatus(status.id)">
-                  {{ status.name }}
-                </button>
-              </div>
-            </li>
+          <div class="card m-3 p-3 shadow-sm">
+            <div class="card-title"> 상담원 상태출력</div>
+            <div class="card-body">
+              <span id="agent-status-label" class="badge rounded-pill text-lg"
+                    :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
+            </div>
+          </div>
 
-            <li class="card m-3 p-3 shadow-sm">
-              <div class="card-title"> 인입시 닫힌 토글 열기 </div>
-              <div class="card-body">
-                <button class="btn btn-light m-1" @click="process_zcc_call_ringing({ 'from':'010'});"> 전화왔다</button>
-              </div>
-            </li>
+          <div class="card m-3 p-3 shadow-sm">
+            <div class="card-title"> 상담원 상태변경</div>
+            <div class="card-body">
+              <button class="btn btn-light m-1" v-for="status in btnStatuses" :key="status.id"
+                      @click="setAgentStatus(status.id)">
+                {{ status.name }}
+              </button>
+            </div>
+          </div>
 
-          </ol>
+          <div class="card m-3 p-3 shadow-sm">
+            <div class="card-title"> 인입시 닫힌 토글 열기</div>
+            <div class="card-body">
+              <button class="btn btn-light m-1" @click="process_zcc_call_ringing({ 'from':'010'});"> 전화왔다</button>
+            </div>
+          </div>
+
+          <div class="card m-3 p-3 shadow-sm">
+            <div class="card-title">
+              연락처 목록
+            </div>
+            <div class="card-subtitle text-gray-900" style="font-size: 12px"> 일치하는 phone 번호의 orders 순위별로 연락처 정보가 출력됨</div>
+            <div class="card-body">
+              <pre>{{ JSON.stringify(contacts, null, 2) }}</pre>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -90,6 +114,8 @@ import {ref} from 'vue'
 export default {
   data() {
     return {
+      ctiMessages: "-",
+      softphoneMessage: "-",
       btnStatuses: [
         {id: '1', name: "대기"},
         {id: '20', name: "나누기"},
@@ -679,6 +705,9 @@ export default {
       console.log("Current agentStatusCode:", this.agentStatusCode);
       console.log("Current agentStatus:", this.agentStatus);
 
+      //화면출력
+      this.ctiMessages = data;
+
       this.zccSmartEmbedLogs.push({"direction": "Received Message", "payload": data});
 
       // Message handler map
@@ -835,6 +864,10 @@ export default {
 
     sendMessage(type, data) {
       console.log("Sending Message type=" + type + " with data=" + JSON.stringify(data));
+      this.softphoneMessage = {
+        type: type,
+        data: data
+      }
 
       this.zccSmartEmbedLogs.push({
         "direction": "Sending Message", "payload": {
