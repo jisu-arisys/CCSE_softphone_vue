@@ -47,13 +47,17 @@
             <div class="col-6">
               <div class="card p-3 shadow-sm">
                 <div class="card-title"> 받은 메세지</div>
-                <pre class="card-subtitle text-black" style="font-size: 12px"> {{ JSON.stringify(ctiMessages, null, 2) }} </pre>
+                <div class="form-floating">
+                  <textarea readonly :value="formattedLogs('Received Message')" class="form-control" style="height: 300px"/>
+                </div>
               </div>
             </div>
             <div class="col-6">
               <div class="card p-3 shadow-sm">
                 <div class="card-title"> 보낸 메세지</div>
-                <pre class="card-subtitle text-black" style="font-size: 12px"> {{ JSON.stringify(softphoneMessage, null, 2) }} </pre>
+                <div class="form-floating">
+                  <textarea readonly :value="formattedLogs('Sending Message')" class="form-control" style="height: 300px"/>
+                </div>
               </div>
             </div>
           </div>
@@ -693,6 +697,9 @@ export default {
     }
   },
   methods: {
+    formattedLogs(type) {
+      return this.zccSmartEmbedLogs.filter(log => log.direction === type).reverse().map(log => JSON.stringify(log, null, 2)).join("\n\n");
+    },
     // Helper functions for contact operations
     findContactByPhone(phoneNumber) {
       if (!phoneNumber) return null;
