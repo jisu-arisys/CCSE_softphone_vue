@@ -695,6 +695,16 @@ export default {
     }
   },
   methods: {
+    getKoreanTimestamp() {
+      const d = new Date();
+      const yyyy = d.getUTCFullYear();
+      const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+      const dd = String(d.getUTCDate()).padStart(2, '0');
+      const hh = String((d.getUTCHours() + 9) % 24).padStart(2, '0');
+      const min = String(d.getUTCMinutes()).padStart(2, '0');
+      const sec = String(d.getUTCSeconds()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd} ${hh}:${min}:${sec}`;
+    },
     formattedLogs(type, keyword = "") {
       return this.zccSmartEmbedLogs
           .filter(log => log.direction === type &&
@@ -777,7 +787,7 @@ export default {
       //화면출력
       this.ctiMessages = data;
 
-      this.zccSmartEmbedLogs.push({"direction": "Received Message", "payload": data});
+      this.zccSmartEmbedLogs.push({"direction": "Received Message", "payload": data, "timestamp": this.getKoreanTimestamp()});
 
       // Message handler map
       const messageHandlers = {
@@ -917,7 +927,8 @@ export default {
       this.zccSmartEmbedLogs.push({
         "direction": "Sending Message", "payload": {
           type: type,
-          data: data
+          data: data,
+          timestamp: this.getKoreanTimestamp()
         }
       });
 
