@@ -67,11 +67,14 @@
 
 
           <div class="row m-1">
+            <label class="text-end">AutoScroll
+              <input type="checkbox" v-model="isAutoScroll"/>
+            </label>
             <div class="col-6">
               <div class="card p-3 shadow-sm">
                 <div class="card-title"> 받은 메세지</div>
                 <div class="form-floating">
-                  <textarea readonly :value="formattedLogs('Received Message')" class="form-control" style="height: 300px"/>
+                  <textarea readonly :value="formattedLogs('Received Message')" class="form-control messageBox" style="height: 300px"/>
                 </div>
               </div>
             </div>
@@ -79,7 +82,7 @@
               <div class="card p-3 shadow-sm">
                 <div class="card-title"> 보낸 메세지</div>
                 <div class="form-floating">
-                  <textarea readonly :value="formattedLogs('Sending Message')" class="form-control" style="height: 300px"/>
+                  <textarea readonly :value="formattedLogs('Sending Message')" class="form-control messageBox" style="height: 300px"/>
                 </div>
               </div>
             </div>
@@ -131,7 +134,7 @@ import {ref} from 'vue'
 export default {
   data() {
     return {
-      activeCallId: "",
+      isAutoScroll: true,
       ctiMessages: "-",
       softphoneMessage: "-",
       btnStatuses: [
@@ -663,6 +666,19 @@ export default {
         this.allowUserToChangeStatus = false;
         this.saveSettings();
       }
+    },
+    // 메세지 추가시 최상단으로 스크롤 이동
+    zccSmartEmbedLogs: {
+      handler() {
+        if (!this.isAutoScroll) return; // false면 스크롤 안 함
+        this.$nextTick(() => {
+          const containers = this.$el.querySelectorAll('.messageBox');
+              containers.forEach(container => {
+                container.scrollTop = 0;
+              });
+        });
+      },
+      deep: true
     }
   },
   methods: {
