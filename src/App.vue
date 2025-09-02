@@ -72,28 +72,41 @@
 
 
           <div class="row m-1">
-            <label class="text-end">AutoScroll
-              <input type="checkbox" v-model="isAutoScroll"/>
-            </label>
             <div class="col-6">
               <div class="card p-3 shadow-sm">
                 <div class="card-title"> 받은 메세지 </div>
-                <div class="text-end p-1" style="font-size: 16px"> search
-                  <input class="bg-light border-0 small"  type="text" v-model="keywordReceivedMessage" style="width: 140px;"/>
+                <div class="row">
+                  <div class="col-3 text-start">
+                    <button class="btn btn-toolbar btn-sm text-danger" type="button" @click.prevent="zccSmartEmbedLogs.Received = []">Clean logs</button>
+                  </div>
+                  <label class="col-3 text-start align-content-center" style="font-size: 14px;">AutoScroll
+                    <input type="checkbox" v-model="isAutoScroll.Received"/>
+                  </label>
+                  <div class="col text-end" style="font-size: 16px"> search
+                    <input class="bg-light border-0 small"  type="text" v-model="keyword.Received" style="width: 140px;"/>
+                  </div>
                 </div>
                 <div class="form-floating">
-                  <textarea readonly :value="formattedLogs('Received Message', keywordReceivedMessage)" class="form-control messageBox" style="height: 300px"/>
+                  <textarea readonly :value="formattedLogs('Received', keyword.Received)" class="form-control messageBox" id="messageBox-Received" style="height: 300px"/>
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="card p-3 shadow-sm">
                 <div class="card-title"> 보낸 메세지</div>
-                <div class="text-end p-1" style="font-size: 16px"> search
-                  <input class="bg-light border-0 small"  type="text" v-model="keywordSendingMessage" style="width: 140px;"/>
+                <div class="row">
+                  <div class="col-3 text-start">
+                    <button class="btn btn-toolbar btn-sm text-danger" type="button" @click.prevent="zccSmartEmbedLogs.Sending = []">Clean logs</button>
+                  </div>
+                  <label class="col-3 text-start align-content-center" style="font-size: 14px;">AutoScroll
+                    <input type="checkbox" v-model="isAutoScroll.Sending"/>
+                  </label>
+                  <div class="col text-end" style="font-size: 16px"> search
+                    <input class="bg-light border-0 small"  type="text" v-model="keyword.Sending" style="width: 140px;"/>
+                  </div>
                 </div>
                 <div class="form-floating">
-                  <textarea readonly :value="formattedLogs('Sending Message', keywordSendingMessage)" class="form-control messageBox" style="height: 300px"/>
+                  <textarea readonly :value="formattedLogs('Sending', keyword.Sending)" class="form-control messageBox" id="messageBox-Sending" style="height: 300px"/>
                 </div>
               </div>
             </div>
@@ -145,11 +158,8 @@ import {ref} from 'vue'
 export default {
   data() {
     return {
-      keywordReceivedMessage: "",
-      keywordSendingMessage: "",
-      isAutoScroll: true,
-      ctiMessages: "-",
-      softphoneMessage: "-",
+      keyword: { Received : "", Sending : "" },
+      isAutoScroll: { Received : true, Sending : true },
       btnStatuses: [
         {id: '1', name: "대기"},
         {id: '20', name: "나누기"},
@@ -251,7 +261,7 @@ export default {
       zccEngagementTimestamps: {}, // Separate cache for timestamps that persists longer
 
       zccSmartHelp: true,
-      zccSmartEmbedLogs: [],
+      zccSmartEmbedLogs: { Received : [], Sending : [] },
       zccRecordingURLs: {},
       zccSmartEmbedDimensions: {"heightInPixels": 700, "widthInPixels": 848},
       zccScreenPopMessage: "",
@@ -681,14 +691,25 @@ export default {
       }
     },
     // 메세지 추가시 최상단으로 스크롤 이동
-    zccSmartEmbedLogs: {
+    'zccSmartEmbedLogs.Sending': {
       handler() {
-        if (!this.isAutoScroll) return; // false면 스크롤 안 함
         this.$nextTick(() => {
-          const containers = this.$el.querySelectorAll('.messageBox');
-              containers.forEach(container => {
-                container.scrollTop = 0;
-              });
+          if (this.isAutoScroll.Sending) {
+            const sendingContainer = this.$el.querySelector('#messageBox-Sending');
+            if (sendingContainer) sendingContainer.scrollTop = 0;
+          }
+        });
+      },
+      deep: true
+    },
+    // 메세지 추가시 최상단으로 스크롤 이동
+    'zccSmartEmbedLogs.Received': {
+      handler() {
+        this.$nextTick(() => {
+          if (this.isAutoScroll.Received) {
+            const receivedContainer = this.$el.querySelector('#messageBox-Received');
+            if (receivedContainer) receivedContainer.scrollTop = 0;
+          }
         });
       },
       deep: true
@@ -706,9 +727,14 @@ export default {
       return `${yyyy}-${mm}-${dd} ${hh}:${min}:${sec}`;
     },
     formattedLogs(type, keyword = "") {
-      return this.zccSmartEmbedLogs
-          .filter(log => log.direction === type &&
-              (keyword === "" || JSON.stringify(log).includes(keyword)))
+      let data = null;
+      switch (type) {
+        case "Received": data = this.zccSmartEmbedLogs.Received; break;
+        case "Sending": data = this.zccSmartEmbedLogs.Sending; break;
+        default: return ""; // type이 없으면 빈 문자열 반환
+      }
+      return data
+          .filter(log => keyword === "" || JSON.stringify(log).includes(keyword))
           .reverse()
           .map(log => JSON.stringify(log, null, 2))
           .join("\n\n");
@@ -784,10 +810,7 @@ export default {
       console.log("Current agentStatusCode:", this.agentStatusCode);
       console.log("Current agentStatus:", this.agentStatus);
 
-      //화면출력
-      this.ctiMessages = data;
-
-      this.zccSmartEmbedLogs.push({"direction": "Received Message", "payload": data, "timestamp": this.getKoreanTimestamp()});
+      this.zccSmartEmbedLogs.Received.push({"direction": "Received Message", "payload": data, "timestamp": this.getKoreanTimestamp()});
 
       // Message handler map
       const messageHandlers = {
@@ -919,12 +942,8 @@ export default {
 
     sendMessage(type, data) {
       console.log("Sending Message type=" + type + " with data=" + JSON.stringify(data));
-      this.softphoneMessage = {
-        type: type,
-        data: data
-      }
 
-      this.zccSmartEmbedLogs.push({
+      this.zccSmartEmbedLogs.Sending.push({
         "direction": "Sending Message", "payload": {
           type: type,
           data: data,
