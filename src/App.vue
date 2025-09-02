@@ -690,25 +690,25 @@ export default {
         this.saveSettings();
       }
     },
-    // 메세지 추가시 최상단으로 스크롤 이동
+    // 메세지 추가시 최하단으로 스크롤 이동
     'zccSmartEmbedLogs.Sending': {
       handler() {
         this.$nextTick(() => {
           if (this.isAutoScroll.Sending) {
             const sendingContainer = this.$el.querySelector('#messageBox-Sending');
-            if (sendingContainer) sendingContainer.scrollTop = 0;
+            if (sendingContainer) sendingContainer.scrollTop = sendingContainer.scrollHeight;;
           }
         });
       },
       deep: true
     },
-    // 메세지 추가시 최상단으로 스크롤 이동
+    // 메세지 추가시 최하단으로 스크롤 이동
     'zccSmartEmbedLogs.Received': {
       handler() {
         this.$nextTick(() => {
           if (this.isAutoScroll.Received) {
             const receivedContainer = this.$el.querySelector('#messageBox-Received');
-            if (receivedContainer) receivedContainer.scrollTop = 0;
+            if (receivedContainer) receivedContainer.scrollTop = receivedContainer.scrollHeight;;
           }
         });
       },
@@ -735,7 +735,6 @@ export default {
       }
       return data
           .filter(log => keyword === "" || JSON.stringify(log).includes(keyword))
-          .reverse()
           .map(log => JSON.stringify(log, null, 2))
           .join("\n\n");
     },
