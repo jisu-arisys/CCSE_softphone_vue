@@ -77,17 +77,23 @@
             </label>
             <div class="col-6">
               <div class="card p-3 shadow-sm">
-                <div class="card-title"> 받은 메세지</div>
+                <div class="card-title"> 받은 메세지 </div>
+                <div class="text-end p-1" style="font-size: 16px"> search
+                  <input class="bg-light border-0 small"  type="text" v-model="keywordReceivedMessage" style="width: 140px;"/>
+                </div>
                 <div class="form-floating">
-                  <textarea readonly :value="formattedLogs('Received Message')" class="form-control messageBox" style="height: 300px"/>
+                  <textarea readonly :value="formattedLogs('Received Message', keywordReceivedMessage)" class="form-control messageBox" style="height: 300px"/>
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="card p-3 shadow-sm">
                 <div class="card-title"> 보낸 메세지</div>
+                <div class="text-end p-1" style="font-size: 16px"> search
+                  <input class="bg-light border-0 small"  type="text" v-model="keywordSendingMessage" style="width: 140px;"/>
+                </div>
                 <div class="form-floating">
-                  <textarea readonly :value="formattedLogs('Sending Message')" class="form-control messageBox" style="height: 300px"/>
+                  <textarea readonly :value="formattedLogs('Sending Message', keywordSendingMessage)" class="form-control messageBox" style="height: 300px"/>
                 </div>
               </div>
             </div>
@@ -139,6 +145,8 @@ import {ref} from 'vue'
 export default {
   data() {
     return {
+      keywordReceivedMessage: "",
+      keywordSendingMessage: "",
       isAutoScroll: true,
       ctiMessages: "-",
       softphoneMessage: "-",
@@ -687,8 +695,13 @@ export default {
     }
   },
   methods: {
-    formattedLogs(type) {
-      return this.zccSmartEmbedLogs.filter(log => log.direction === type).reverse().map(log => JSON.stringify(log, null, 2)).join("\n\n");
+    formattedLogs(type, keyword = "") {
+      return this.zccSmartEmbedLogs
+          .filter(log => log.direction === type &&
+              (keyword === "" || JSON.stringify(log).includes(keyword)))
+          .reverse()
+          .map(log => JSON.stringify(log, null, 2))
+          .join("\n\n");
     },
     // Helper functions for contact operations
     findContactByPhone(phoneNumber) {
