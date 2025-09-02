@@ -10,40 +10,57 @@
 
         <div class="m-3">
           <div class="card m-3 p-3 shadow-sm">
-            <div class="card-title"> 전화걸기</div>
-            <div class="card-subtitle text-danger" style="font-size: 12px"> 오디오장치 연결 필수</div>
-
-            <div class="card-body">
-              <form class="d-sm-inline-block w-auto me-auto">
-                <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
-                                                id="phoneNumber" v-model="numberToCall" name="phoneNumber"
-                                                inputmode="tel"
-                                                placeholder="e.g., (650) 555-7890">
-                  <button class="btn btn-primary py-0" type="button" @click.prevent="makeCall();">Call</button>
+            <div class="row">
+              <div class="col-4">
+                <div class="card-title"> 전화걸기</div>
+                <div class="card-subtitle text-danger" style="font-size: 12px"> 오디오장치 연결 필수</div>
+                <div class="card-body">
+                  <form class="d-sm-inline-block w-auto me-auto">
+                    <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
+                                                    id="phoneNumber" v-model="numberToCall" name="phoneNumber"
+                                                    inputmode="tel"
+                                                    placeholder="e.g., (650) 555-7890">
+                      <button class="btn btn-primary py-0" type="button" @click.prevent="makeCall();">Call</button>
+                    </div>
+                  </form>
                 </div>
-              </form>
+              </div>
+
+              <div class="col-8">
+                <div class="card-title"> 전화끊기</div>
+                <div class="card-subtitle text-danger" style="font-size: 12px"> &nbsp;
+<!--                  <pre>{{JSON.stringify( zccEngagementCache, null, 2)}}</pre>-->
+                </div>
+                <div class="card-body">
+                  <form class="d-sm-inline-block w-auto me-auto">
+                    <div class="input-group">
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="card m-3 p-3 shadow-sm">
-            <div class="card-title"> 전화끊기</div>
-            <div class="card-subtitle text-danger" style="font-size: 12px"></div>
-
-            <div class="card-body">
-              <form class="d-sm-inline-block w-auto me-auto">
-                <div class="input-group">
-                  <select class="bg-light form-control border-0 small" v-model="activeCallId" style="min-width: 200px;">
-                    <option v-for="(call, index) in Object.keys(zccEngagementCache)" :key="call || index" :value="call">
-                      {{ call }}
-                    </option>
-                  </select>
-                  <button class="btn btn-danger py-0" type="button" @click.prevent="terminateEngagement(activeCallId,'voice');">End</button>
-                  <button class="btn btn-warning py-0" type="button" @click.prevent="closeEngagementWrapup(activeCallId,'voice');">상담완료</button>
-                  <button class="btn btn-warning py-0" type="button" @click.prevent="setEngagementDisposition(activeCallId,'voice','렌탈');">렌탈</button>
+            <div class="row">
+              <div class="col-4">
+                <div class="card-title"> 상담원 상태출력</div>
+                <div class="card-body">
+                  <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
                 </div>
-              </form>
+              </div>
+              <div class="col-8">
+                <div class="card-title"> 상담원 상태변경</div>
+                <div class="card-body">
+                  <button class="btn btn-light m-1" v-for="status in btnStatuses" :key="status.id"
+                          @click="setAgentStatus(status.id)">
+                    {{ status.name }}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+
 
           <div class="row m-1">
             <div class="col-6">
@@ -61,24 +78,6 @@
                   <textarea readonly :value="formattedLogs('Sending Message')" class="form-control" style="height: 300px"/>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div class="card m-3 p-3 shadow-sm">
-            <div class="card-title"> 상담원 상태출력</div>
-            <div class="card-body">
-              <span id="agent-status-label" class="badge rounded-pill text-lg"
-                    :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
-            </div>
-          </div>
-
-          <div class="card m-3 p-3 shadow-sm">
-            <div class="card-title"> 상담원 상태변경</div>
-            <div class="card-body">
-              <button class="btn btn-light m-1" v-for="status in btnStatuses" :key="status.id"
-                      @click="setAgentStatus(status.id)">
-                {{ status.name }}
-              </button>
             </div>
           </div>
 
