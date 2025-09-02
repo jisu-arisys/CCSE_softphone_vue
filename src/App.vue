@@ -61,7 +61,10 @@
               <div class="col-8">
                 <div class="card-title"> 상담원 상태변경</div>
                 <div class="card-body">
-                  <button class="btn btn-light m-1" v-for="status in btnStatuses" :key="status.id"
+                  <button class="btn btn-light m-1 text-success" @click="setAgentStatus(1)">
+                    대기
+                  </button>
+                  <button class="btn btn-light m-1" v-for="status in statusMappings" :key="status.id"
                           @click="setAgentStatus(status.id)">
                     {{ status.name }}
                   </button>
@@ -111,6 +114,61 @@
               </div>
             </div>
           </div>
+
+          <div class="card m-3 p-3 shadow-sm">
+            <div class="card-title" @click="toggleCard($event)" style="cursor: pointer; display: flex; justify-content: space-between;">
+              상담원 이석사유 관리
+              <span class="p-1 text-end">▼</span>
+            </div>
+            <div class="card-subtitle text-danger" style="font-size: 14px; display: flex; align-items: center; gap: 10px;"> 시스템 상태 (systemStatuses) - 변경불가 :
+                <ul class="m-0 px-3" style="display: inline-flex; gap: 20px; list-style: disc inside;">
+                  <li><b>1</b>: Ready</li>
+                  <li><b>3</b>: Occupied</li>
+                  <li><b>30</b>: Offline</li>
+                </ul>
+            </div>
+            <div class="card-body" style="display: none;">
+              <div class="row">
+                <div class="col-md-6"><h6> 이석사유 추가 </h6>
+                  <form>
+                    <form @submit.prevent="addStatusMapping">
+                      <div class="mb-3">
+                        <label for="statusId" class="form-label">Status ID</label>
+                        <input type="text" class="form-control" id="statusId" v-model="newStatus.id" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="statusName" class="form-label">Status Name</label>
+                        <input type="text" class="form-control" id="statusName" v-model="newStatus.name" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Add Status</button>
+                    </form>
+                  </form>
+                </div>
+                <div class="col-md-6"><h6> 이석사유 목록 및 삭제 </h6>
+                  <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                      <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="(mapping, index) in statusMappings">
+                        <td>{{ mapping.id }}</td>
+                        <td>{{ mapping.name }}</td>
+                        <td><button class="btn btn-danger btn-sm" @click="deleteStatusMapping(index)">Delete</button></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
 
 <!--          <div class="card m-3 p-3 shadow-sm">-->
 <!--            <div class="card-title"> 인입시 닫힌 토글 열기</div>-->
@@ -287,19 +345,20 @@ export default {
       vanitySubdomain: '', // New setting
       dispositionMappings: [],
       newDisposition: {id: '', name: ''},
-      statusMappings: [],
-      newStatus: {id: '', name: ''},
-      selectedStatus: "", // New data property for the dropdown
-      systemStatuses: [ // Centralized system status codes
-        {id: '1', name: 'Ready'},
-        {id: '3', name: 'Occupied'},
-        {id: '30', name: 'Offline'},
+      statusMappings: [
         {id: '20', name: "나누기"},
         {id: '21', name: "식사"},
         {id: '22', name: "교육"},
         {id: '23', name: "회의"},
         {id: '24', name: "교대조 종료"},
         {id: '0bv-2zFiRuqe51BoFLRxZw', name: "타 부서 지원"},
+      ],
+      newStatus: {id: '', name: ''},
+      selectedStatus: "", // New data property for the dropdown
+      systemStatuses: [ // Centralized system status codes
+        {id: '1', name: 'Ready'},
+        {id: '3', name: 'Occupied'},
+        {id: '30', name: 'Offline'},
       ],
       customCard: {
         title: 'Case Details',
@@ -716,6 +775,15 @@ export default {
     }
   },
   methods: {
+    toggleCard(event) {
+      const card = event.currentTarget.closest('.card');
+      const body = card.querySelectorAll('.card-body');
+      body.forEach(b => b.style.display = b.style.display === 'none' ? 'block' : 'none');
+
+      // 아이콘 바꾸기
+      const icon = event.currentTarget.querySelector('span');
+      icon.textContent = body.style.display === 'none' ? '▼' : '▲';
+    },
     getKoreanTimestamp() {
       const d = new Date();
       const yyyy = d.getUTCFullYear();
@@ -2510,6 +2578,11 @@ export default {
     },
     addStatusMapping() {
       if (this.newStatus.id && this.newStatus.name) {
+        // Prevent adding system IDs
+        if (this.systemStatuses.some(s => s.id === this.newStatus.id)) {
+          alert('Status ID already exists in system statuses. Please choose a different ID!');
+          return;
+        }
         // Prevent adding duplicate IDs
         if (this.statusMappings.some(s => s.id === this.newStatus.id)) {
           alert('Status ID already exists!');
