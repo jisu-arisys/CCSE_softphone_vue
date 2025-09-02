@@ -34,6 +34,10 @@
                 <div class="card-body">
                   <form class="d-sm-inline-block w-auto me-auto">
                     <div class="input-group">
+                      <input class="bg-light form-control border-0 small" :value="activeCallId"style="min-width: 220px;"/>
+                      <button class="btn btn-danger py-0" type="button" @click.prevent="terminateEngagement(activeCallId,'voice');">End</button>
+                      <button class="btn btn-warning py-0" type="button" @click.prevent="closeEngagementWrapup(activeCallId,'voice');">상담완료</button>
+<!--                      <button class="btn btn-warning py-0" type="button" @click.prevent="setEngagementDisposition(activeCallId,'voice','렌탈');">렌탈</button>-->
                     </div>
                   </form>
                 </div>
@@ -296,6 +300,11 @@ export default {
   },
 
   computed: {
+    // active 상태인 callId 찾기 : addCall 정보 안뜸.
+    activeCallId() {
+      return Object.keys(this.zccEngagementCache)[0] || null;
+    },
+
     // Count of today's interactions across all recent calls
     todaysInteractionsCount() {
       if (!this.recentCalls || this.recentCalls.length === 0) {
