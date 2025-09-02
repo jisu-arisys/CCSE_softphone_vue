@@ -6,6 +6,11 @@
         <nav class="navbar navbar-light navbar-expand bg-white shadow topbar static-top">
           <h4 class="m-3">Iframe Guide Page</h4>
           <span class="text-sm-start">ZOOM Contact Center Smart Embeded - with Vue3 Option Api</span>
+
+          <div class="ms-auto p-3">
+            <button class="btn btn-success" :disabled="!isIframeCollapsed" @click.stop="toggleIframeCollapse">iframe 열기</button>
+            <button class="btn btn-info" :disabled="isIframeCollapsed" @click.stop="toggleIframeCollapse">iframe 닫기</button>
+          </div>
         </nav>
 
         <div class="m-3">
@@ -88,12 +93,12 @@
             </div>
           </div>
 
-          <div class="card m-3 p-3 shadow-sm">
-            <div class="card-title"> 인입시 닫힌 토글 열기</div>
-            <div class="card-body">
-              <button class="btn btn-light m-1" @click="process_zcc_call_ringing({ 'from':'010'});"> 전화왔다</button>
-            </div>
-          </div>
+<!--          <div class="card m-3 p-3 shadow-sm">-->
+<!--            <div class="card-title"> 인입시 닫힌 토글 열기</div>-->
+<!--            <div class="card-body">-->
+<!--              <button class="btn btn-light m-1" @click="process_zcc_call_ringing({ 'from':'010'});"> 전화왔다</button>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
       </div>
     </div>
