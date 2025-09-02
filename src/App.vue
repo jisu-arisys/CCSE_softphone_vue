@@ -1320,6 +1320,10 @@ export default {
         return;
       }
 
+      //test : 링울림 시점이 아닌 팝업 시점으로 메세지 전송시점 변경
+      this.sendMessage('zcc-get-variables', {"engagementId": event.data.data.engagementId});
+      this.message = {"engagementId": event.data.data.engagementId};
+
       const incomingNumber = event.data.data.incomingPhoneNumber;
       const matchingContacts = this.contacts.filter(contact => contact && contact.phone === incomingNumber);
       const contactObjects = matchingContacts.map(contact => this.createContactObject(contact));
@@ -1424,12 +1428,12 @@ export default {
         this.toggleIframeCollapse();
       }
 
-
+      // 인입번호를 연락처에서 조회하고 존재하면, pageView 와 선택된 연락처index 값 수정
       this.handleScreenPop(data.from, 'phone');
 
       // Request variables if engagement ID is provided
       if (data.engagementId) {
-        this.sendMessage('zcc-get-variables', {"engagementId": data.engagementId});
+        // this.sendMessage('zcc-get-variables', {"engagementId": data.engagementId});
 
         // Store timestamp in separate persistent cache
         this.zccEngagementTimestamps[data.engagementId] = data.createTs;
