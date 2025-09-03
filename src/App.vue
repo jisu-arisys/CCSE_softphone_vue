@@ -40,7 +40,6 @@
                     <div class="input-group">
                       <input class="bg-light form-control border-0 small" :value="activeCallId" style="min-width: 220px;"/>
                       <button class="btn btn-danger py-0" type="button" @click.prevent="terminateEngagement(activeCallId,'voice');">End</button>
-                      <button class="btn btn-warning py-0" type="button" @click.prevent="closeEngagementWrapup(activeCallId,'voice');">상담완료</button>
                     </div>
                   </form>
                 </div>
