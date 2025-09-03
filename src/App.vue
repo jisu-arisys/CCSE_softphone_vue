@@ -35,10 +35,10 @@
                 <div class="card-title"> 전화끊기</div>
                 <div class="card-subtitle text-danger" style="font-size: 12px"> &nbsp;
                 </div>
-                <div class="card-body">
-                  <form class="d-sm-inline-block w-auto me-auto">
+                <div class="card-body d-flex align-items-center">
+                  <form class="d-sm-inline-block">
                     <div class="input-group">
-                      <input class="bg-light form-control border-0 small" :value="activeCallId"style="min-width: 220px;"/>
+                      <input class="bg-light form-control border-0 small" :value="activeCallId" style="min-width: 220px;"/>
                       <button class="btn btn-danger py-0" type="button" @click.prevent="terminateEngagement(activeCallId,'voice');">End</button>
                       <button class="btn btn-warning py-0" type="button" @click.prevent="closeEngagementWrapup(activeCallId,'voice');">상담완료</button>
                     </div>
@@ -54,6 +54,7 @@
                 <div class="card-title"> 상담원 상태출력</div>
                 <div class="card-body">
                   <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
+                  <span id="call-status-label" class="badge rounded-pill mx-5" v-if="zccEngagementCache !=null && agentStatusDisplay === 'Occupied'" :class="getStateBadgeClass(zccEngagementCache[activeCallId].state)">{{ zccEngagementCache[activeCallId].state }}</span>
                 </div>
                 <div class="card-subtitle text-secondary p-2" style="font-size: 10px">
                   <span class="text-primary">Occupied</span> 상태에서 상담완료시, <span class="text-success">Ready</span>로 전환됩니다. 이석 상태에서 상담완료시에는 상태가 유지됩니다.
@@ -433,8 +434,10 @@ export default {
       }
     },
     canChangeStatus() {
+      // feat: dev 를 위해 통화중에도 상태변경 가능 하도록 수정함. (2025.09.03)
       // User cannot change status if no status has been received yet, or if in 'occupied' (3) or 'offline' (30) state
-      const result = this.agentStatusCode !== '' && this.agentStatusCode !== '3' && this.agentStatusCode !== '30';
+      // const result = this.agentStatusCode !== '' && this.agentStatusCode !== '3' && this.agentStatusCode !== '30';
+      const result = this.agentStatusCode !== '' && this.agentStatusCode !== '30';
       console.log('=== CAN CHANGE STATUS ===');
       console.log('agentStatusCode:', this.agentStatusCode);
       console.log('agentStatusCode !== "":', this.agentStatusCode !== '');
