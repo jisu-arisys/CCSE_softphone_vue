@@ -61,7 +61,7 @@
               <div class="col-8">
                 <div class="card-title"> 상담원 상태변경</div>
                 <div class="card-body">
-                  <button class="btn btn-light m-1 text-success" @click="setAgentStatus(1)">
+                  <button class="btn btn-light m-1 text-success" @click="setAgentStatus('1')">
                     대기
                   </button>
                   <button class="btn btn-light m-1" v-for="status in statusMappings" :key="status.id"
