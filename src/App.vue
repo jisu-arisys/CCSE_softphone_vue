@@ -226,6 +226,7 @@ import {ref} from 'vue'
 export default {
   data() {
     return {
+      message:"",
       keyword: { Received : "", Sending : "" },
       isAutoScroll: { Received : true, Sending : true },
       btnStatuses: [
