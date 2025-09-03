@@ -16,7 +16,7 @@
         <div class="m-3">
           <div class="card m-3 p-3 shadow-sm">
             <div class="row">
-              <div class="col-4">
+              <div class="col-5">
                 <div class="card-title"> 전화걸기</div>
                 <div class="card-subtitle text-danger" style="font-size: 12px"> 오디오장치 연결 필수</div>
                 <div class="card-body">
@@ -31,7 +31,7 @@
                 </div>
               </div>
 
-              <div class="col-8">
+              <div class="col-7">
                 <div class="card-title"> 전화끊기</div>
                 <div class="card-subtitle text-danger" style="font-size: 12px"> &nbsp;
                 </div>
@@ -50,7 +50,7 @@
 
           <div class="card m-3 p-3 shadow-sm">
             <div class="row">
-              <div class="col-4">
+              <div class="col-5">
                 <div class="card-title"> 상담원 상태출력</div>
                 <div class="card-subtitle text-secondary" style="font-size: 12px">
                   {id: '3', name: 'Occupied'} 상태에서 상담완료시, '대기'로 전환됩니다. 그외 이석 상태에서 상담완료시 상태가 변경되지 않습니다.
@@ -59,7 +59,7 @@
                   <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
                 </div>
               </div>
-              <div class="col-8">
+              <div class="col-7">
                 <div class="card-title"> 상담원 상태변경</div>
                 <div class="card-body">
                   <button class="btn btn-light m-1 text-success" @click="setAgentStatus('1')">
