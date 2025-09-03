@@ -171,6 +171,47 @@
             </div>
           </div>
 
+          <div class="card m-3 p-3 shadow-sm">
+            <div class="card-title" @click="toggleCard($event)" style="cursor: pointer; display: flex; justify-content: space-between;">
+              인입 고객 정보
+              <span class="p-1 text-end">▼</span>
+            </div>
+
+            <div class="card-body" style="display: none;">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-subtitle text-primary" style="font-size: 14px;"> contacts 내 선택된 연락처
+                  </div>
+                  <table v-if="selectedContact !== null">
+                    <tr>
+                      <td>
+                        <b class="text-success"> {{selectedContact !== null ? contacts[selectedContact].name : ''}}</b> <button type="button" class="btn-close" aria-label="Close" @click.prevent="clearSelectedContact()"></button><br>
+                        <b>Email: </b>{{selectedContact !== null ? contacts[selectedContact].email : ''}}<br>
+                        <b>Phone: </b><a @click.prevent="makeCall(selectedContact !== null ? contacts[selectedContact].phone : '')"
+                                         href="#">{{selectedContact !== null ? contacts[selectedContact].phone : ''}}</a><br>
+                        <b>Account: </b> {{selectedContact !== null ? contacts[selectedContact].account : ''}}<br>
+                        <b>Location: </b> {{selectedContact !== null ? contacts[selectedContact].location : ''}}<br>
+                        <b>Orders: </b> {{selectedContact !== null ? contacts[selectedContact].orders : ''}}<br>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <div class="card-subtitle text-primary" style="font-size: 14px;"> customCard 내 사용자정의 데이터 (zcc-get-variables-response)
+                  </div>
+                  <table v-if="shouldDisplayCustomCard">
+                    <thead>{{ customCard.title }}</thead>
+                    <tbody>
+                    <tr v-for="field in customCard.fields">
+                      <td><b>{{ field.label }}: </b>{{ field.value }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -358,7 +399,22 @@ export default {
       ],
       customCard: {
         title: 'Case Details',
-        fields: [],
+        fields: [
+          {
+            id: "customerPhone",
+            label: "전화번호",
+            type: "variable",
+            source: "Ani",   // globalVariableDisplayName: Ani
+            value: ""
+          },
+          {
+            id: "errorCount",
+            label: "오류 횟수",
+            type: "variable",
+            source: "Count", // globalVariableDisplayName: Count
+            value: ""
+          }
+        ],
         displayRule: 'always'
       },
       newCustomField: {
