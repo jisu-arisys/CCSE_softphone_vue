@@ -5,7 +5,7 @@
       <div id="content">
         <nav class="navbar navbar-light navbar-expand bg-white shadow topbar static-top">
           <h4 class="m-3">Iframe Guide Page</h4>
-          <span class="text-sm-start">ZOOM Contact Center Smart Embeded - with Vue3 Option Api</span>
+          <span class="text-sm-start">ZOOM Contact Center Smart Embed - with Vue3 Option Api</span>
 
           <div class="ms-auto p-3">
             <button class="btn btn-success" :disabled="!isIframeCollapsed" @click.stop="toggleIframeCollapse">iframe 열기</button>
