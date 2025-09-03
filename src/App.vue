@@ -2821,7 +2821,7 @@ export default {
 
 
     // Make test function available globally for debugging
-    window.testHoverResize = (width, height) => this.testHoverResize(width, height);
+    // window.testHoverResize = (width, height) => this.testHoverResize(width, height);
 
 
   },
