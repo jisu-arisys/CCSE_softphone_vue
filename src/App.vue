@@ -40,7 +40,6 @@
                     <div class="input-group">
                       <input class="bg-light form-control border-0 small" :value="activeCallId"style="min-width: 220px;"/>
                       <button class="btn btn-danger py-0" type="button" @click.prevent="terminateEngagement(activeCallId,'voice');">End</button>
-                      <button class="btn btn-warning py-0" type="button" @click.prevent="closeEngagementWrapup(activeCallId,'voice');">상담완료</button>
                     </div>
                   </form>
                 </div>
@@ -2404,29 +2403,6 @@ export default {
         channelType: channelType,
         requestId: requestId
       });
-    },
-
-    closeEngagementWrapup(engagementId, channelType) {
-      const requestId = `request-${engagementId}-${Date.now()}`;
-
-      console.log(`=== CLOSING ENGAGEMENT WRAPUP ===`);
-      console.log(`Engagement ID: ${engagementId}`);
-      console.log(`Channel Type: ${channelType}`);
-      console.log(`Request ID: ${requestId}`);
-
-      this.sendMessage('zcc-close-engagement-wrapup', {
-        engagementId: engagementId,
-        channelType: channelType,
-        requestId: requestId
-      });
-
-      // For SMS, video, and chat engagements, also remove from local cache since they're now fully closed
-      if (channelType === 'sms' || channelType === 'video' || channelType === 'chat') {
-        console.log(`Removing ${channelType} engagement ${engagementId} from local cache`);
-        if (this.zccEngagementCache[engagementId]) {
-          delete this.zccEngagementCache[engagementId];
-        }
-      }
     },
 
     setEngagementDisposition(engagementId, channelType, dispositionId) {
