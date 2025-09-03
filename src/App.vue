@@ -1543,7 +1543,7 @@ export default {
 
       if (!success) {
         this.zccScreenPopMessage = "Incoming call from " + data;
-        await delay(10000);
+        // await delay(10000);
         this.zccScreenPopMessage = '';
       }
     },
