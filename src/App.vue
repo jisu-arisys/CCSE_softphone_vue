@@ -130,18 +130,16 @@
             <div class="card-body" style="display: none;">
               <div class="row">
                 <div class="col-md-6"><h6> 이석사유 추가 </h6>
-                  <form>
-                    <form @submit.prevent="addStatusMapping">
-                      <div class="mb-3">
-                        <label for="statusId" class="form-label">Status ID</label>
-                        <input type="text" class="form-control" id="statusId" v-model="newStatus.id" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="statusName" class="form-label">Status Name</label>
-                        <input type="text" class="form-control" id="statusName" v-model="newStatus.name" required>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Add Status</button>
-                    </form>
+                  <form @submit.prevent="addStatusMapping">
+                    <div class="mb-3">
+                      <label for="statusId" class="form-label">Status ID</label>
+                      <input type="text" class="form-control" id="statusId" v-model="newStatus.id" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="statusName" class="form-label">Status Name</label>
+                      <input type="text" class="form-control" id="statusName" v-model="newStatus.name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Status</button>
                   </form>
                 </div>
                 <div class="col-md-6"><h6> 이석사유 목록 및 삭제 </h6>
