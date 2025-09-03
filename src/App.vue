@@ -54,6 +54,9 @@
             <div class="row">
               <div class="col-4">
                 <div class="card-title"> 상담원 상태출력</div>
+                <div class="card-subtitle text-secondary" style="font-size: 12px">
+                  {id: '3', name: 'Occupied'} 상태에서 상담완료시, '대기'로 전환됩니다. 그외 이석 상태에서 상담완료시 상태가 변경되지 않습니다.
+                </div>
                 <div class="card-body">
                   <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
                 </div>
@@ -448,8 +451,10 @@ export default {
       }
     },
     canChangeStatus() {
+      // feat: dev 를 위해 통화중에도 상태변경 가능 하도록 수정함. (2025.09.03)
       // User cannot change status if no status has been received yet, or if in 'occupied' (3) or 'offline' (30) state
-      const result = this.agentStatusCode !== '' && this.agentStatusCode !== '3' && this.agentStatusCode !== '30';
+      // const result = this.agentStatusCode !== '' && this.agentStatusCode !== '3' && this.agentStatusCode !== '30';
+      const result = this.agentStatusCode !== '' && this.agentStatusCode !== '30';
       console.log('=== CAN CHANGE STATUS ===');
       console.log('agentStatusCode:', this.agentStatusCode);
       console.log('agentStatusCode !== "":', this.agentStatusCode !== '');
