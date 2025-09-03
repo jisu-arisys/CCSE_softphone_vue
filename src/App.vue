@@ -822,7 +822,7 @@ export default {
         this.$nextTick(() => {
           if (this.isAutoScroll.Sending) {
             const sendingContainer = this.$el.querySelector('#messageBox-Sending');
-            if (sendingContainer) sendingContainer.scrollTop = sendingContainer.scrollHeight;;
+            if (sendingContainer) sendingContainer.scrollTop = sendingContainer.scrollHeight;
           }
         });
       },
@@ -834,7 +834,7 @@ export default {
         this.$nextTick(() => {
           if (this.isAutoScroll.Received) {
             const receivedContainer = this.$el.querySelector('#messageBox-Received');
-            if (receivedContainer) receivedContainer.scrollTop = receivedContainer.scrollHeight;;
+            if (receivedContainer) receivedContainer.scrollTop = receivedContainer.scrollHeight;
           }
         });
       },
@@ -1947,7 +1947,7 @@ export default {
         callConnected: true
       });
 
-      if (data.direction == "outbound") {
+      if (data.direction === "outbound") {
         this.updateEngagementCache({
           taskId: data.engagementId,
           engagementDirection: data.direction,
