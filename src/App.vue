@@ -115,6 +115,18 @@
             </div>
           </div>
 
+<!--          <div class="card m-3 p-3 shadow-sm">-->
+<!--            <div class="card-title" @click="toggleCard($event)" style="cursor: pointer; display: flex; justify-content: space-between;">-->
+<!--              연락처 정보-->
+<!--              <span class="p-1 text-end">▼</span>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--              <div class="card-subtitle"> {{ pageView }} </div>-->
+<!--              {{ JSON.stringify(contacts[selectedContact],null,2) }}-->
+<!--              {{ message }}-->
+<!--            </div>-->
+<!--          </div>-->
+
           <div class="card m-3 p-3 shadow-sm">
             <div class="card-title" @click="toggleCard($event)" style="cursor: pointer; display: flex; justify-content: space-between;">
               상담원 이석사유 관리
