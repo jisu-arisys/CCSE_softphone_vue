@@ -34,7 +34,6 @@
               <div class="col-8">
                 <div class="card-title"> 전화끊기</div>
                 <div class="card-subtitle text-danger" style="font-size: 12px"> &nbsp;
-<!--                  <pre>{{JSON.stringify( zccEngagementCache, null, 2)}}</pre>-->
                 </div>
                 <div class="card-body">
                   <form class="d-sm-inline-block w-auto me-auto">
@@ -42,7 +41,6 @@
                       <input class="bg-light form-control border-0 small" :value="activeCallId"style="min-width: 220px;"/>
                       <button class="btn btn-danger py-0" type="button" @click.prevent="terminateEngagement(activeCallId,'voice');">End</button>
                       <button class="btn btn-warning py-0" type="button" @click.prevent="closeEngagementWrapup(activeCallId,'voice');">상담완료</button>
-<!--                      <button class="btn btn-warning py-0" type="button" @click.prevent="setEngagementDisposition(activeCallId,'voice','렌탈');">렌탈</button>-->
                     </div>
                   </form>
                 </div>
@@ -118,18 +116,6 @@
             </div>
           </div>
 
-<!--          <div class="card m-3 p-3 shadow-sm">-->
-<!--            <div class="card-title" @click="toggleCard($event)" style="cursor: pointer; display: flex; justify-content: space-between;">-->
-<!--              연락처 정보-->
-<!--              <span class="p-1 text-end">▼</span>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div class="card-subtitle"> {{ pageView }} </div>-->
-<!--              {{ JSON.stringify(contacts[selectedContact],null,2) }}-->
-<!--              {{ message }}-->
-<!--            </div>-->
-<!--          </div>-->
-
           <div class="card m-3 p-3 shadow-sm">
             <div class="card-title" @click="toggleCard($event)" style="cursor: pointer; display: flex; justify-content: space-between;">
               상담원 이석사유 관리
@@ -181,14 +167,6 @@
             </div>
           </div>
 
-
-
-<!--          <div class="card m-3 p-3 shadow-sm">-->
-<!--            <div class="card-title"> 인입시 닫힌 토글 열기</div>-->
-<!--            <div class="card-body">-->
-<!--              <button class="btn btn-light m-1" @click="process_zcc_call_ringing({ 'from':'010'});"> 전화왔다</button>-->
-<!--            </div>-->
-<!--          </div>-->
         </div>
       </div>
     </div>
