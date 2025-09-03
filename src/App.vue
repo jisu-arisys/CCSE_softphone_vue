@@ -51,11 +51,11 @@
             <div class="row">
               <div class="col-5">
                 <div class="card-title"> 상담원 상태출력</div>
-                <div class="card-subtitle text-secondary" style="font-size: 12px">
-                  {id: '3', name: 'Occupied'} 상태에서 상담완료시, '대기'로 전환됩니다. 그외 이석 상태에서 상담완료시 상태가 변경되지 않습니다.
-                </div>
                 <div class="card-body">
                   <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
+                </div>
+                <div class="card-subtitle text-secondary p-2" style="font-size: 10px">
+                  <span class="text-primary">Occupied</span> 상태에서 상담완료시, <span class="text-success">Ready</span>로 전환됩니다. 이석 상태에서 상담완료시에는 상태가 유지됩니다.
                 </div>
               </div>
               <div class="col-7">
@@ -120,16 +120,11 @@
               상담원 이석사유 관리
               <span class="p-1 text-end">▼</span>
             </div>
-            <div class="card-subtitle text-danger" style="font-size: 14px; display: flex; align-items: center; gap: 10px;"> 시스템 상태 (systemStatuses) - 변경불가 :
-                <ul class="m-0 px-3" style="display: inline-flex; gap: 20px; list-style: disc inside;">
-                  <li><b>1</b>: Ready</li>
-                  <li><b>3</b>: Occupied</li>
-                  <li><b>30</b>: Offline</li>
-                </ul>
-            </div>
             <div class="card-body" style="display: none;">
               <div class="row">
-                <div class="col-md-6"><h6> 이석사유 추가 </h6>
+                <div class="col-md-6">
+                  <div class="card-subtitle text-primary" style="font-size: 14px;"> 이석사유 추가
+                  </div>
                   <form @submit.prevent="addStatusMapping">
                     <div class="mb-3">
                       <label for="statusId" class="form-label">Status ID</label>
@@ -141,8 +136,17 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Add Status</button>
                   </form>
+                  <div class="card-subtitle text-danger p-3" style="font-size: 14px;"> 시스템 상태 (systemStatuses) - 변경불가 :
+                    <ul class="m-0 px-3" style="gap: 20px;">
+                      <li><b>1</b>: Ready</li>
+                      <li><b>3</b>: Occupied</li>
+                      <li><b>30</b>: Offline</li>
+                    </ul>
+                  </div>
                 </div>
-                <div class="col-md-6"><h6> 이석사유 목록 및 삭제 </h6>
+                <div class="col-md-6">
+                  <div class="card-subtitle text-primary" style="font-size: 14px;"> 이석사유 목록 및 삭제
+                  </div>
                   <div class="table-responsive">
                     <table class="table table-striped table-sm">
                       <thead>
