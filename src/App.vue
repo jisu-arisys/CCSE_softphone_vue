@@ -5,7 +5,7 @@
       <div id="content">
         <nav class="navbar navbar-light navbar-expand bg-white shadow topbar static-top">
           <h4 class="m-3">Iframe Guide Page</h4>
-          <span class="text-sm-start">ZOOM Contact Center Smart Embeded - with Vue3 Option Api</span>
+          <span class="text-sm-start">ZOOM Contact Center Smart Embed - with Vue3 Option Api</span>
 
           <div class="ms-auto p-3">
             <button class="btn btn-success" :disabled="!isIframeCollapsed" @click.stop="toggleIframeCollapse">iframe 열기</button>
@@ -61,7 +61,7 @@
               <div class="col-8">
                 <div class="card-title"> 상담원 상태변경</div>
                 <div class="card-body">
-                  <button class="btn btn-light m-1 text-success" @click="setAgentStatus(1)">
+                  <button class="btn btn-light m-1 text-success" @click="setAgentStatus('1')">
                     대기
                   </button>
                   <button class="btn btn-light m-1" v-for="status in statusMappings" :key="status.id"
@@ -130,18 +130,16 @@
             <div class="card-body" style="display: none;">
               <div class="row">
                 <div class="col-md-6"><h6> 이석사유 추가 </h6>
-                  <form>
-                    <form @submit.prevent="addStatusMapping">
-                      <div class="mb-3">
-                        <label for="statusId" class="form-label">Status ID</label>
-                        <input type="text" class="form-control" id="statusId" v-model="newStatus.id" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="statusName" class="form-label">Status Name</label>
-                        <input type="text" class="form-control" id="statusName" v-model="newStatus.name" required>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Add Status</button>
-                    </form>
+                  <form @submit.prevent="addStatusMapping">
+                    <div class="mb-3">
+                      <label for="statusId" class="form-label">Status ID</label>
+                      <input type="text" class="form-control" id="statusId" v-model="newStatus.id" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="statusName" class="form-label">Status Name</label>
+                      <input type="text" class="form-control" id="statusName" v-model="newStatus.name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Status</button>
                   </form>
                 </div>
                 <div class="col-md-6"><h6> 이석사유 목록 및 삭제 </h6>
@@ -755,7 +753,7 @@ export default {
         this.$nextTick(() => {
           if (this.isAutoScroll.Sending) {
             const sendingContainer = this.$el.querySelector('#messageBox-Sending');
-            if (sendingContainer) sendingContainer.scrollTop = sendingContainer.scrollHeight;;
+            if (sendingContainer) sendingContainer.scrollTop = sendingContainer.scrollHeight;
           }
         });
       },
@@ -767,7 +765,7 @@ export default {
         this.$nextTick(() => {
           if (this.isAutoScroll.Received) {
             const receivedContainer = this.$el.querySelector('#messageBox-Received');
-            if (receivedContainer) receivedContainer.scrollTop = receivedContainer.scrollHeight;;
+            if (receivedContainer) receivedContainer.scrollTop = receivedContainer.scrollHeight;
           }
         });
       },
@@ -1476,7 +1474,7 @@ export default {
 
       if (!success) {
         this.zccScreenPopMessage = "Incoming call from " + data;
-        await delay(10000);
+        // await delay(10000);
         this.zccScreenPopMessage = '';
       }
     },
@@ -1880,7 +1878,7 @@ export default {
         callConnected: true
       });
 
-      if (data.direction == "outbound") {
+      if (data.direction === "outbound") {
         this.updateEngagementCache({
           taskId: data.engagementId,
           engagementDirection: data.direction,
