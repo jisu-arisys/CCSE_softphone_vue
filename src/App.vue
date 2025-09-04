@@ -2655,6 +2655,12 @@ export default {
       this.saveStatusMappings();
     },
 
+    getAgentStatus(statusCode) {
+      this.sendMessage('zcc-agent-status-get-request', {
+        id: statusCode
+      });
+    },
+
     setAgentStatus(statusCode) {
       // Only send request if status code is different and allowed
       if (statusCode !== this.agentStatusCode && this.canChangeStatus) {
