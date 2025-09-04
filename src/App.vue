@@ -360,7 +360,7 @@ export default {
       zccSmartHelp: true,
       zccSmartEmbedLogs: { Received : [], Sending : [] },
       zccRecordingURLs: {},
-      zccSmartEmbedDimensions: {"heightInPixels": 700, "widthInPixels": 848},
+      zccSmartEmbedDimensions: {"heightInPixels": 700, "widthInPixels": 424},
       zccScreenPopMessage: "",
       // leftSideNavColor: "#1a1647;",
       // leftSideNavLogo: "/img/zoomlly.png",
@@ -371,7 +371,7 @@ export default {
       boundStopResize: null,
       resizeShieldElement: null,
       isIframeCollapsed: false,
-      iframePreCollapseWidth: 698, // Initialize with starting width
+      iframePreCollapseWidth: 424, // Initialize with starting width
       cluster: 'default', // New setting
       debug: false, // New setting
       ctiVersion: '3', // New setting
@@ -2158,7 +2158,7 @@ export default {
         console.log('Collapsing: Set width to 0');
       } else {
         // Expanding
-        const newWidth = this.iframePreCollapseWidth > 0 ? this.iframePreCollapseWidth : 698; // Fallback to 698
+        const newWidth = this.iframePreCollapseWidth > 0 ? this.iframePreCollapseWidth : 424; // Fallback to 424
         this.zccSmartEmbedDimensions.widthInPixels = newWidth;
         console.log('Expanding: Set width to', newWidth, '(from iframePreCollapseWidth:', this.iframePreCollapseWidth, ')');
       }
@@ -2755,7 +2755,7 @@ export default {
     } else {
       // Default position for hover mode (right side)
       // Ensure initial width is considered for right-side placement
-      const initialWidth = this.zccSmartEmbedDimensions.widthInPixels || 698; // Use default if not set
+      const initialWidth = this.zccSmartEmbedDimensions.widthInPixels || 424; // Use default if not set
       this.floatingIframePosition = {x: window.innerWidth - initialWidth - 20, y: 100};
     }
 
