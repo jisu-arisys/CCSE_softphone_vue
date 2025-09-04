@@ -53,7 +53,7 @@
                 <div class="card-title"> 상담원 상태출력</div>
                 <div class="card-body">
                   <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
-                  <span id="call-status-label" class="badge rounded-pill mx-5" v-if="zccEngagementCache !=null && agentStatusDisplay === 'Occupied'" :class="getStateBadgeClass(zccEngagementCache[activeCallId].state)">{{ zccEngagementCache[activeCallId].state }}</span>
+                  <span id="call-status-label" class="badge rounded-pill mx-5" v-if="activeCallId !=null && agentStatusDisplay === 'Occupied'" :class="getStateBadgeClass(zccEngagementCache[activeCallId].state)">{{ zccEngagementCache[activeCallId].state }}</span>
                 </div>
                 <div class="card-subtitle text-secondary p-2" style="font-size: 10px">
                   <span class="text-primary">Occupied</span> 상태에서 상담완료시, <span class="text-success">Ready</span>로 전환됩니다. 이석 상태에서 상담완료시에는 상태가 유지됩니다.
@@ -183,6 +183,7 @@
                   <div class="card-subtitle text-primary" style="font-size: 14px;"> contacts 내 선택된 연락처
                   </div>
                   <table v-if="selectedContact !== null">
+                    <tbody>
                     <tr>
                       <td>
                         <b class="text-success"> {{selectedContact !== null ? contacts[selectedContact].name : ''}}</b> <button type="button" class="btn-close" aria-label="Close" @click.prevent="clearSelectedContact()"></button><br>
@@ -194,6 +195,7 @@
                         <b>Orders: </b> {{selectedContact !== null ? contacts[selectedContact].orders : ''}}<br>
                       </td>
                     </tr>
+                    </tbody>
                   </table>
                 </div>
                 <div class="col-md-6">
