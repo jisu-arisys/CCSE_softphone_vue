@@ -50,10 +50,13 @@
           <div class="card m-3 p-3 shadow-sm">
             <div class="row">
               <div class="col-5">
-                <div class="card-title"> 상담원 상태출력</div>
-                <div class="card-body">
+                <div class="card-title"> 상담원 상태출력 </div>
+                <div class="card-body d-flex justify-content-between align-items-center">
                   <span id="agent-status-label" class="badge rounded-pill text-lg" :class="statusDropdownClass">{{ agentStatusDisplay }}</span>
-                  <span id="call-status-label" class="badge rounded-pill mx-5" v-if="activeCallId !=null && agentStatusDisplay === 'Occupied'" :class="getStateBadgeClass(zccEngagementCache[activeCallId].state)">{{ zccEngagementCache[activeCallId].state }}</span>
+                  <template v-if="activeCallId !=null && agentStatusDisplay === 'Occupied'">
+                    <span class="badge rounded-pill"  :class="getStateBadgeClass(zccEngagementCache[activeCallId].state)">{{ zccEngagementCache[activeCallId].state }}</span>
+                  </template>
+                  <button class="btn btn-toolbar btn-sm text-danger" style="font-size: 10px" type="button" @click.prevent="requestEngagementStatus()">통화상태 확인</button>
                 </div>
                 <div class="card-subtitle text-secondary p-2" style="font-size: 10px">
                   <span class="text-primary">Occupied</span> 상태에서 상담완료시, <span class="text-success">Ready</span>로 전환됩니다. 이석 상태에서 상담완료시에는 상태가 유지됩니다.
